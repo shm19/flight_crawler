@@ -1,12 +1,10 @@
 const express = require('express');
+const db = require('../db');
+
 const router = express.Router();
 
-router.get('/flights', (req, res) => {
-  res.send('OK');
-});
-
 router.post('/flights', (req, res) => {
-  console.log(req.body);
+  db.createMultipleListings(req.body.data);
   res.send('ok');
 });
 

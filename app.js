@@ -4,6 +4,7 @@ const api = require('./routes/api');
 const db = require('./db');
 const { getData } = require('./data');
 start();
+
 async function start() {
   try {
     await db.connect();
