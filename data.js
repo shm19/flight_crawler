@@ -19,5 +19,6 @@ module.exports.getData = async () => {
         price: element.flightInfo.price,
       });
     });
+    return result;
   } catch (error) {}
 };

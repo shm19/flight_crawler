@@ -3,9 +3,14 @@ const createError = require('http-errors');
 const api = require('./routes/api');
 const db = require('./db');
 const { getData } = require('./data');
-
-db.connect();
-getData();
+start();
+async function start() {
+  try {
+    await db.connect();
+    const result = await getData();
+    db.createMultipleListings(result);
+  } catch (error) {}
+}
 
 const app = express();
 
