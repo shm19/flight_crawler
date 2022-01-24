@@ -1,8 +1,6 @@
-from sqlite3 import Date
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 import requests
-import json
 import random
 
 # mehrabad
@@ -50,8 +48,17 @@ def get_data(url, origin, origin_city, price_range):
     return data
 
 
-with open('nationl_url.json', 'w') as f:
-    json.dump(get_data(nationl_url, 'Mehrabad', 'Tehran', [15, 50]), f)
+# with open('nationl_url.json', 'w') as f:
+#     json.dump(get_data(nationl_url, 'Mehrabad', 'Tehran', [15, 50]), f)
 
-with open('internationl_url.json', 'w') as f:
-    json.dump(get_data(internationl_url, 'IKA', 'Tehran', [500, 1500]), f)
+# with open('internationl_url.json', 'w') as f:
+#     json.dump(get_data(internationl_url, 'IKA', 'Tehran', [500, 1500])
+
+server_url = 'http://localhost:3000/api/'
+
+national_data = get_data(nationl_url, 'Mehrabad', 'Tehran', [15, 50])
+
+international_data = get_data(internationl_url, 'IKA', 'Tehran', [500, 1500])
+
+requests.post(f'{server_url}/flights', json={'data': national_data})
+requests.post(f'{server_url}/flights', json={'data': international_data})
