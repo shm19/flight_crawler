@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 import requests
 import json
+import random
 
 # mehrabad
 nationl_url = 'https://www.flightsfrom.com/THR/departures?dateMethod=day&dateFrom=2022-01-23&dateTo=2022-01-30'
@@ -16,7 +17,7 @@ def get_html(url):
     return r.text
 
 
-def get_data(url, origin, origin_city):
+def get_data(url, origin, origin_city, price_range):
     soup = BeautifulSoup(get_html(url), 'lxml')
 
     date = datetime(2022, 6, 23)
@@ -43,17 +44,14 @@ def get_data(url, origin, origin_city):
             'destination_air_port': air_port,
             'origin_city': origin_city,
             'destination_city': city,
-            'flightnumber': flightnumber
+            'flightnumber': flightnumber,
+            'price': random.randint(price_range[0], price_range[1])
         })
     return data
 
 
 with open('nationl_url.json', 'w') as f:
-    json.dump(get_data(nationl_url, 'Mehrabad', 'Tehran'), f)
+    json.dump(get_data(nationl_url, 'Mehrabad', 'Tehran', [15, 50]), f)
 
 with open('internationl_url.json', 'w') as f:
-    json.dump(get_data(internationl_url, 'IKA', 'Tehran'), f)
-
-'''
-ADD PRICE TO DATA
-'''
+    json.dump(get_data(internationl_url, 'IKA', 'Tehran', [500, 1500]), f)
