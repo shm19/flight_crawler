@@ -4,8 +4,8 @@ const api = require('./routes/api');
 const db = require('./db');
 const { getData } = require('./data');
 
-// db.connect();
-// getData();
+db.connect();
+getData();
 
 const app = express();
 app.use(express.json());
