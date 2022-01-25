@@ -3,6 +3,7 @@ const createError = require('http-errors');
 const api = require('./routes/api');
 const db = require('./db');
 const { getData } = require('./data');
+const { ObjectId } = require('mongodb');
 
 start();
 
@@ -25,10 +26,21 @@ async function start() {
     //   'Yazd',
     //   new Date('2022-06-23T00:25:00.000+00:00')
     // );
-    await db.deleteFlight(
-      new Date('2022-06-23T00:30:00.000+00:00'),
-      'ATA Airlines'
-    );
+    // await db.deleteFlight(
+    //   new Date('2022-06-23T00:30:00.000+00:00'),
+    //   'ATA Airlines'
+    // );
+    // await db.updateFlight(ObjectId('61f0383e2d4298eea21f6997'), 100);
+    // await db.updateFlightWithFilter(
+    //   'Iran Aseman Airlines',
+    //   'Tehran',
+    //   'Sirjan',
+    //   new Date('2022-06-23T01:00:00.000+00:00'),
+    //   100
+    // );
+    // await db.getAirportNames('Tehran', 'Paris', new Date(null), 2, 2);
+    await db.sortFlights({ price: -1 });
+
     // db.createMultipleListings(result);
   } catch (error) {}
 }

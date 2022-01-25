@@ -5,8 +5,9 @@ module.exports.connect = async () => {
     'mongodb+srv://admin:admin@cluster0.6siop.mongodb.net/FLIGHTS?retryWrites=true&w=majority';
   client = await new MongoClient(uri).connect();
 };
-module.exports.createMultipleListings = async newListings => {
-  newListings.forEach(listing => {
+module.exports.createMultipleListings = async (newListings) => {
+  newListings.forEach((listing) => {
+    listing.createdAt = Date.now();
     if (listing.date) listing.date = new Date(listing.date);
   });
 
@@ -32,7 +33,6 @@ module.exports.createMultipleListings = async newListings => {
 // };
 
 exports.findFlights = async (date, flightType = ['normal', 'firstClass']) => {
-  console.log(date);
   const result = await client
     .db('FLIGHTS')
     .collection('flights')
@@ -232,5 +232,70 @@ exports.deleteFlight = async (date, airline) => {
   });
   console.log(result);
   console.log('finished');
+  return result;
+};
+
+exports.updateFlight = async (_id, capacity) => {
+  const result = await client
+    .db('FLIGHTS')
+    .collection('flights')
+    .update(
+      {
+        _id,
+      },
+      { $set: { capacity: capacity } }
+    );
+  console.log(result);
+  return result;
+};
+
+exports.updateFlightWithFilter = async (
+  air_line,
+  origin_city,
+  destination_city,
+  date,
+  capacity
+) => {
+  const result = await client
+    .db('FLIGHTS')
+    .collection('flights')
+    .update(
+      { air_line, origin_city, destination_city, date },
+      { $set: { capacity: capacity } }
+    );
+  console.log(result);
+  return result;
+};
+
+exports.getAirportNames = async (
+  origin_city,
+  destination_city,
+  date,
+  limit = 2,
+  pageNo = 1
+) => {
+  const result = await client
+    .db('FLIGHTS')
+    .collection('flights')
+    .find({ origin_city, destination_city, date })
+    .project({
+      _id: 0,
+      origin_air_port: 1,
+      destination_air_port: 1,
+    })
+    .skip(limit * (pageNo - 1))
+    .limit(limit)
+    .toArray();
+  console.log(result);
+  return result;
+};
+exports.sortFlights = async (option) => {
+  const result = await client
+    .db('FLIGHTS')
+    .collection('flights')
+    .find()
+    .sort(option)
+    .toArray();
+  console.log(result);
   return result;
 };
