@@ -10,7 +10,8 @@ async function start() {
     await db.connect();
     // const result = await getData();
     // console.log(result);
-    await db.findMultipleListings();
+    const result = await db.findFlights(new Date('2022-06-23'));
+    console.log(result);
     // db.createMultipleListings(result);
   } catch (error) {}
 }
