@@ -35,6 +35,8 @@ def get_data(url, origin, origin_city, price_range):
         air_port = i.select('div')[3].text.strip().split(' ')[-1]
         flightnumber = i.select_one('.departures-15').text.strip()
 
+        flight_type = random.choice(['normal', 'firstClass'])
+
         data.append({
             'date': complete_date.strftime('%Y-%m-%d %H:%M'),
             'air_line': air_line,
@@ -43,7 +45,8 @@ def get_data(url, origin, origin_city, price_range):
             'origin_city': origin_city,
             'destination_city': city,
             'flightnumber': flightnumber,
-            'price': random.randint(price_range[0], price_range[1])
+            'price': random.randint(price_range[0], price_range[1]),
+            'flight_type': flight_type
         })
     return data
 
