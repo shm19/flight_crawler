@@ -16,3 +16,9 @@ module.exports.createMultipleListings = async (newListings) => {
   );
   console.log(result.insertedIds);
 };
+
+module.exports.findMultipleListings = async () => {
+  const result = await client.db('FLIGHTS').collection('flights').find();
+
+  console.log(result);
+};

@@ -8,8 +8,10 @@ start();
 async function start() {
   try {
     await db.connect();
-    const result = await getData();
-    db.createMultipleListings(result);
+    // const result = await getData();
+    // console.log(result);
+    await db.findMultipleListings();
+    // db.createMultipleListings(result);
   } catch (error) {}
 }
 
