@@ -1,4 +1,5 @@
 const { MongoClient } = require('mongodb');
+const { getCurrencyData } = require('./data');
 let client;
 module.exports.connect = async () => {
   const uri =
@@ -6,8 +7,10 @@ module.exports.connect = async () => {
   client = await new MongoClient(uri).connect();
 };
 module.exports.createMultipleListings = async (newListings) => {
+  const exchangeRate = await getCurrencyData();
   newListings.forEach((listing) => {
     listing.createdAt = Date.now();
+    listing.price *= exchangeRate;
     if (listing.date) listing.date = new Date(listing.date);
   });
 

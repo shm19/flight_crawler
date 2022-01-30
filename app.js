@@ -2,7 +2,7 @@ const express = require('express');
 const createError = require('http-errors');
 const api = require('./routes/api');
 const db = require('./db');
-const { getData } = require('./data');
+const { getFlightData } = require('./data');
 const { ObjectId } = require('mongodb');
 
 start();
@@ -10,8 +10,8 @@ start();
 async function start() {
   try {
     await db.connect();
-    // const result = await getData();
-
+    const result = await getFlightData();
+    db.createMultipleListings(result);
     // await db.findFlights();
     // await db.findFlights(new Date('2022-06-23'), ['firstClass']);
     // await db.findFlightsWithPrice(10, 50);
@@ -39,9 +39,7 @@ async function start() {
     //   100
     // );
     // await db.getAirportNames('Tehran', 'Paris', new Date(null), 2, 2);
-    await db.sortFlights({ price: -1 });
-
-    // db.createMultipleListings(result);
+    // await db.sortFlights({ price: -1 });
   } catch (error) {}
 }
 
