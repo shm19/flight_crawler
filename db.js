@@ -6,9 +6,9 @@ module.exports.connect = async () => {
     'mongodb+srv://admin:admin@cluster0.6siop.mongodb.net/FLIGHTS?retryWrites=true&w=majority';
   client = await new MongoClient(uri).connect();
 };
-module.exports.createMultipleListings = async (newListings) => {
+module.exports.createMultipleListings = async newListings => {
   const exchangeRate = await getCurrencyData();
-  newListings.forEach((listing) => {
+  newListings.forEach(listing => {
     listing.createdAt = Date.now();
     listing.price *= exchangeRate;
     if (listing.date) listing.date = new Date(listing.date);
@@ -292,7 +292,7 @@ exports.getAirportNames = async (
   console.log(result);
   return result;
 };
-exports.sortFlights = async (option) => {
+exports.sortFlights = async option => {
   const result = await client
     .db('FLIGHTS')
     .collection('flights')

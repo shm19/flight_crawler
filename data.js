@@ -9,7 +9,7 @@ module.exports.getFlightData = async () => {
     const types = ['normal', 'firstClass'];
 
     const result = [];
-    array.forEach((element) => {
+    array.forEach(element => {
       result.push({
         // date: null,
         // air_line: null,
